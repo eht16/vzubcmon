@@ -1,0 +1,4 @@
+# crontab file for vzubcmon
+
+0 * * * *	root	python /usr/local/vzubcmon/vzubcmon
+
