@@ -69,6 +69,13 @@ class VzUbcMon(object):
         self._database.write(current_values)
         self._print_report(changed_values)
 
+    #----------------------------------------------------------------------
+    def reset_database(self):
+        """
+        Clean the database of all values
+        """
+        old_values = self._database.reset()
+
 
 #----------------------------------------------------------------------
 def main():
@@ -81,11 +88,17 @@ def main():
         help=u'database file to store UBC failcounts [default: %s]' % DATABASE_FILE)
     option_parser.add_option('--ubc', dest='ubc_file', default=UBC_FILE,
         help=u'read user beancounters from this file [default: %s]' % UBC_FILE)
+    option_parser.add_option('--reset', action='store_true', default=False,
+        help='reset the database of old values', dest='reset_database')
     arg_options = option_parser.parse_args()[0]
 
-    # check
     vzubcmon = VzUbcMon(arg_options.ubc_file, arg_options.database)
-    vzubcmon.check()
+    if arg_options.reset_database:
+        # reset database
+        vzubcmon.reset_database()
+    else:
+        # check
+        vzubcmon.check()
 
 
 if __name__ == "__main__":

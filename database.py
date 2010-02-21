@@ -66,3 +66,11 @@ class VzUbcMonDatabase(object):
         database.close()
         # check file permissions
         self._check_database_file_permissions()
+
+    #----------------------------------------------------------------------
+    def reset(self):
+        """
+        Clean the database of all values
+        """
+        # isn't this easy?
+        self.write(None)
