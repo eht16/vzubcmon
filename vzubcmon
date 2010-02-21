@@ -36,7 +36,7 @@ class VzUbcMon(object):
         """
         if changes:
             container_id = self._parser.get_information()[1]
-            print 'Detected increased fail counts of UBC parameters for container ID %s\n' \
+            print 'Detected increased fail counts of UBC parameters for container ID %s:\n' \
                 % container_id
             for change in changes:
                 print change
@@ -58,7 +58,7 @@ class VzUbcMon(object):
 
             # check
             if current_failcnt > old_failcnt:
-                msg = 'Increased failcnt for "%s" %s -> %s' % \
+                msg = '"%s": %s -> %s' % \
                     (resource_name, old_failcnt, current_failcnt)
                 changed_values.append(msg)
             elif current_failcnt < old_failcnt:

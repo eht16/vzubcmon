@@ -61,9 +61,10 @@ class VzUbcMonParser(object):
                 self._bc_version = values[1]
             elif values_len >= 6:
                 if values_len == 7:
-                    if values[0].isdigit():
+                    ctid = values[0][:-1]
+                    if ctid.isdigit():
                         # we got the container id
-                        self._container_id = values[0]
+                        self._container_id = ctid
                     else:
                         # header line
                         continue
