@@ -11,7 +11,7 @@ from parser import VzUbcMonParser
 
 
 UBC_FILE = '/proc/user_beancounters'
-DATABASE_FILE = '/root/vzubcmon.pck'
+DATABASE_FILE = '/var/cache/vzubcmon/vzubcmon.pck'
 
 
 ###########################################################################
