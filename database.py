@@ -27,12 +27,12 @@ class VzUbcMonDatabase(object):
 
         | **return** resources (dict)
         """
-        if exists(self._filename):
+        try:
             database = open(self._filename, 'r')
             resources = load(database)
             database.close()
             return resources
-        else:
+        except IOError:
             return dict()
 
     #----------------------------------------------------------------------
