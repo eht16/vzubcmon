@@ -74,7 +74,7 @@ class VzUbcMon(object):
         """
         Clean the database of all values
         """
-        old_values = self._database.reset()
+        self._database.reset()
 
 
 #----------------------------------------------------------------------
