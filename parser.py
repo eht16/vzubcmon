@@ -50,6 +50,8 @@ class VzUbcMonParser(object):
         """
         Parse /proc/user_beancounters and store the values in the object
         """
+        # TODO adjust the code to also parse more than one container so that we
+        # could also run on a container node
         ubc_file = open(self._filename, 'r')
         self._resources = {}
         for line in ubc_file:
