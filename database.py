@@ -72,5 +72,6 @@ class VzUbcMonDatabase(object):
         """
         Clean the database of all values
         """
+        cleaned = {}
         # isn't this easy?
-        self.write(None)
+        self.write(cleaned)
