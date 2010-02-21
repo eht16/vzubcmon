@@ -10,7 +10,7 @@ from database import VzUbcMonDatabase
 from parser import VzUbcMonParser
 
 
-UBC_FILE = 'sample_bc'
+UBC_FILE = '/proc/user_beancounters'
 DATABASE_FILE = '/root/vzubcmon.pck'
 
 
@@ -79,11 +79,13 @@ def main():
     # arguments
     option_parser = OptionParser()
     option_parser.add_option('--database', dest='database', default=DATABASE_FILE,
-        help=u'database file to store UBC failcounts')
+        help=u'database file to store UBC failcounts [default: %s]' % DATABASE_FILE)
+    option_parser.add_option('--ubc', dest='ubc_file', default=UBC_FILE,
+        help=u'read user beancounters from this file [default: %s]' % UBC_FILE)
     arg_options = option_parser.parse_args()[0]
 
     # check
-    vzubcmon = VzUbcMon(UBC_FILE, arg_options.database)
+    vzubcmon = VzUbcMon(arg_options.ubc_file, arg_options.database)
     vzubcmon.check()
 
 
