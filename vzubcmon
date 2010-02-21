@@ -51,12 +51,11 @@ class VzUbcMon(object):
         changed_values = []
 
         for resource_name in current_values:
-            try:
-                old_failcnt = old_values[resource_name].failcnt
-            except KeyError:
+            if not old_values.has_key(resource_name):
                 continue
-
+            old_failcnt = old_values[resource_name].failcnt
             current_failcnt = current_values[resource_name].failcnt
+
             # check
             if current_failcnt > old_failcnt:
                 msg = 'Increased failcnt for "%s" %s -> %s' % \
