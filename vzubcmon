@@ -28,18 +28,19 @@ class VzUbcMon(object):
         self._database = VzUbcMonDatabase(database_filename)
 
     #----------------------------------------------------------------------
-    def _print_report(self, changes):
+    def _print_report(self, container_id, changes):
         """
         Write a simple report to stdout
 
         | **param** changes (seq of str)
         """
         if changes:
-            container_id = self._parser.get_information()[1]
             print 'Detected increased fail counts of UBC parameters for container ID %s:\n' \
                 % container_id
             for change in changes:
                 print change
+            print
+            print
 
     #----------------------------------------------------------------------
     def check(self):
@@ -47,27 +48,28 @@ class VzUbcMon(object):
         Compare the current UBC values against the ones from the last check
         """
         old_values = self._database.read()
-        current_values = self._parser.get_resources()
-        changed_values = []
+        resources = self._parser.get_resources()
 
-        for resource_name in current_values:
-            if not old_values.has_key(resource_name):
-                continue
-            old_failcnt = old_values[resource_name].failcnt
-            current_failcnt = current_values[resource_name].failcnt
+        for ctid, current_values in resources.iteritems():
+            changed_values = []
+            for resource_name in current_values:
+                if not old_values.has_key(ctid) or not old_values[ctid].has_key(resource_name):
+                    continue
+                old_failcnt = old_values[ctid][resource_name].failcnt
+                current_failcnt = current_values[resource_name].failcnt
 
-            # check
-            if current_failcnt > old_failcnt:
-                msg = '"%s": %s -> %s' % \
-                    (resource_name, old_failcnt, current_failcnt)
-                changed_values.append(msg)
-            elif current_failcnt < old_failcnt:
-                # if the current failcnt is less than the old one, the container
-                # might be have been restarted, so reset the current value
-                current_values[resource_name].failcnt = old_failcnt
+                # check
+                if current_failcnt > old_failcnt:
+                    msg = '%s: %s -> %s' % \
+                        (resource_name, old_failcnt, current_failcnt)
+                    changed_values.append(msg)
+                elif current_failcnt < old_failcnt:
+                    # if the current failcnt is less than the old one, the container
+                    # might be have been restarted, so reset the current value
+                    current_values[resource_name].failcnt = old_failcnt
+            self._print_report(ctid, changed_values)
 
-        self._database.write(current_values)
-        self._print_report(changed_values)
+        self._database.write(resources)
 
     #----------------------------------------------------------------------
     def reset_database(self):
