@@ -9,6 +9,7 @@ class VzUbcMonResource(object):
     """
     Simple data structure to represent a UBC resource
     """
+
     #----------------------------------------------------------------------
     def __init__(self, held=None, maxheld=None, barrier=None,
                     limit=None, failcnt=None, resource_seq=None):
@@ -26,3 +27,7 @@ class VzUbcMonResource(object):
             self.barrier = int(barrier)
             self.limit = int(limit)
             self.failcnt = int(failcnt)
+
+    #----------------------------------------------------------------------
+    def __repr__(self):
+        return '%s:%s (%s)' % (self.barrier, self.limit, self.failcnt)
