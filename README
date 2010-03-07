@@ -5,7 +5,7 @@ VzUbcMon
 About
 =====
 A simple monitor to regularly check for UBC failcount changes
-in OpenVZ/Virtuozzo containers.
+in OpenVZ/Virtuozzo containers or on hardware nodes.
 It's designed to run as a cronjob to mail the report to the admin
 if there are any changes.
 
@@ -35,14 +35,6 @@ Alternatively, you can also run the script manually from the
 command line, e.g.
 
 # ./vzubcmon
-
-
-Limitations
-===========
-Currently, it only reads /proc/user_beancounters inside containers
-but at some point it will also be able to read a hardware node's
-/proc/user_beancounters to monitor all containers of a hardware
-node.
 
 
 License
