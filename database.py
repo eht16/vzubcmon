@@ -42,7 +42,7 @@ class VzUbcMonDatabase(object):
         saved already exists and if not, create it
         """
         database_directory = dirname(self._filename)
-        if not exists(database_directory):
+        if database_directory and not exists(database_directory):
             makedirs(database_directory, 0700)
 
     #----------------------------------------------------------------------
