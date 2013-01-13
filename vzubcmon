@@ -89,7 +89,7 @@ def main():
     option_parser.add_option('--database', dest='database', default=DATABASE_FILE,
         help=u'database file to store UBC failcounts [default: %s]' % DATABASE_FILE)
     option_parser.add_option('--ubc', dest='ubc_file', default=UBC_FILE,
-        help=u'read user beancounters from this file [default: %s]' % UBC_FILE)
+        help=u'read user beancounters from this file ("-" for stdin) [default: %s]' % UBC_FILE)
     option_parser.add_option('--reset', action='store_true', default=False,
         help='reset the database of old values', dest='reset_database')
     arg_options = option_parser.parse_args()[0]

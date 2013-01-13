@@ -4,7 +4,9 @@ Author: Enrico Tröger
 License: GPLv2
 """
 
+from os.path import exists
 from resource import VzUbcMonResource
+import sys
 
 
 ###########################################################################
@@ -47,9 +49,17 @@ class VzUbcMonParser(object):
     #----------------------------------------------------------------------
     def _parse(self):
         """
-        Parse /proc/user_beancounters and store the values in the object
+        Read either from the passed file or from stdin and store the values in the object
         """
-        ubc_file = open(self._filename, 'r')
+        if not exists(self._filename) and self._filename == '-':
+            self._parse_input(sys.stdin)
+        else:
+            ubc_file = open(self._filename, 'r')
+            self._parse_input(ubc_file)
+            ubc_file.close()
+
+    #----------------------------------------------------------------------
+    def _parse_input(self, ubc_file):
         self._resources = {}
         current_ctid = 0
         for line in ubc_file:
@@ -70,10 +80,8 @@ class VzUbcMonParser(object):
                     del values[0]
                 resource_name = values[0]
                 resource_values = values[1:]  # skip the name
-                self._resources[current_ctid][resource_name] = \
-                    VzUbcMonResource(resource_seq=resource_values)
-
-        ubc_file.close()
+                resource = VzUbcMonResource(resource_seq=resource_values)
+                self._resources[current_ctid][resource_name] = resource
 
 
 if __name__ == '__main__':
