@@ -4,6 +4,7 @@ Author: Enrico Tröger
 License: GPLv2
 """
 
+
 ###########################################################################
 class VzUbcMonResource(object):
     """
@@ -21,7 +22,8 @@ class VzUbcMonResource(object):
             self.failcnt = int(resource_seq[4])
         else:
             if not isinstance(held, basestring)and not isinstance(held, int):
-                raise AttributeError('You must specify either a resource using keyword arguments or a complete resource sequence')
+                raise AttributeError('You must specify either a resource using keyword '
+                                     'arguments or a complete resource sequence')
             self.held = int(held)
             self.maxheld = int(maxheld)
             self.barrier = int(barrier)

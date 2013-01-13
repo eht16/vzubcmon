@@ -69,7 +69,7 @@ class VzUbcMonParser(object):
                         continue
                     del values[0]
                 resource_name = values[0]
-                resource_values = values[1:] # skip the name
+                resource_values = values[1:]  # skip the name
                 self._resources[current_ctid][resource_name] = \
                     VzUbcMonResource(resource_seq=resource_values)
 
