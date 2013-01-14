@@ -23,9 +23,10 @@ class VzUbcMon(object):
     """
 
     #----------------------------------------------------------------------
-    def __init__(self, ubc_filename, database_filename):
+    def __init__(self, ubc_filename, database_filename, okmsg):
         self._parser = VzUbcMonParser(ubc_filename)
         self._database = VzUbcMonDatabase(database_filename)
+        self._okmsg = okmsg
 
     #----------------------------------------------------------------------
     def _print_report(self, container_id, changes):
@@ -49,6 +50,7 @@ class VzUbcMon(object):
         """
         old_values = self._database.read()
         resources = self._parser.get_resources()
+        changes = False
 
         for ctid, current_values in resources.iteritems():
             changed_values = []
@@ -68,6 +70,11 @@ class VzUbcMon(object):
                     # might be have been restarted, so reset the current value
                     current_values[resource_name].failcnt = old_failcnt
             self._print_report(ctid, changed_values)
+            if changed_values:
+                changes = True  # remember if we had any changes for the okmsg below
+
+        if not changes and self._okmsg:
+            print 'ok'
 
         self._database.write(resources)
 
@@ -92,9 +99,12 @@ def main():
         help=u'read user beancounters from this file ("-" for stdin) [default: %s]' % UBC_FILE)
     option_parser.add_option('--reset', action='store_true', default=False,
         help='reset the database of old values', dest='reset_database')
+    option_parser.add_option('--okmsg', action='store_true', default=False,
+        help='simply print "ok" if no changes are detected (useful if any output is needed '
+             'like for Zabbix, do not use with cron)', dest='okmsg')
     arg_options = option_parser.parse_args()[0]
 
-    vzubcmon = VzUbcMon(arg_options.ubc_file, arg_options.database)
+    vzubcmon = VzUbcMon(arg_options.ubc_file, arg_options.database, arg_options.okmsg)
     if arg_options.reset_database:
         # reset database
         vzubcmon.reset_database()
