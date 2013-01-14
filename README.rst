@@ -9,6 +9,10 @@ in OpenVZ/Virtuozzo containers or on hardware nodes.
 It's designed to run as a cronjob to mail the report to the admin
 if there are any changes.
 
+Alternatively it can also be used to be used with Zabbix to efficiently
+monitor a hardware node for UBC failcount changes. For details see
+the file README.zabbix.rst.
+
 
 Requirements
 ============

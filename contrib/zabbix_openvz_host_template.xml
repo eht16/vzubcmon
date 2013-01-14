@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>2.0</version>
+    <date>2013-01-14T21:36:01Z</date>
+    <groups>
+        <group>
+            <name>Hosts</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template OpenVZ Host</template>
+            <name>Template OpenVZ Host</name>
+            <groups>
+                <group>
+                    <name>Hosts</name>
+                </group>
+            </groups>
+            <applications/>
+            <items>
+                <item>
+                    <name>UserBeanCounter Failcount</name>
+                    <type>0</type>
+                    <snmp_community/>
+                    <multiplier>0</multiplier>
+                    <snmp_oid/>
+                    <key>openvz.ubc</key>
+                    <delay>300</delay>
+                    <history>7</history>
+                    <trends>365</trends>
+                    <status>0</status>
+                    <value_type>4</value_type>
+                    <allowed_hosts/>
+                    <units/>
+                    <delta>0</delta>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privpassphrase/>
+                    <formula>1</formula>
+                    <delay_flex/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <data_type>0</data_type>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description/>
+                    <inventory_link>0</inventory_link>
+                    <applications/>
+                    <valuemap/>
+                </item>
+            </items>
+            <discovery_rules/>
+            <macros/>
+            <templates/>
+            <screens/>
+        </template>
+    </templates>
+    <triggers>
+        <trigger>
+            <expression>{Template OpenVZ Host:openvz.ubc.str(&quot;ok&quot;)}=0</expression>
+            <name>UBC Failcount on {HOST.NAME} changed</name>
+            <url/>
+            <status>0</status>
+            <priority>3</priority>
+            <description/>
+            <type>1</type>
+            <dependencies/>
+        </trigger>
+    </triggers>
+</zabbix_export>
